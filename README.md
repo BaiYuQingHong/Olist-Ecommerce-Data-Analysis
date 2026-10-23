@@ -1,1 +1,39 @@
-# Olist-Ecommerce-Data-Analysis
+# Olist 巴西电商平台销售与用户分析
+## 一、项目背景
+本项目基于 Kaggle 公开的 Olist 电商数据集（包含约 10 万订单、9 张业务表），使用 MySQL 进行数据清洗与关系建模，旨在分析平台 2017 年的整体销售趋势、核心创收品类以及用户复购留存现状，为运营策略提供数据支撑。
+
+## 二、技术栈
+*   **数据库**：MySQL 8.0
+*   **分析工具**：Excel（数据可视化）
+*   **核心技能**：多表 JOIN、CTE (公用表表达式)、窗口函数、日期函数、条件聚合
+
+## 三、核心分析与业务洞察
+
+### 1. 销售趋势分析 (GMV)
+*   **业务动作**：统计 2017 年各月总销售额（商品价格+运费），过滤已取消/不可用订单。
+*   **业务洞察**：11月达到全年峰值（约 115 万），符合黑五/双十一等大促规律。建议平台在大促前 1-2 个月提前优化供应链和物流资源。
+*   <img width="1653" height="993" alt="2017年每个月总销售额" src="https://github.com/user-attachments/assets/2aa0b0a1-2bc3-451e-bee0-59e2c72fbea8" />
+*
+
+### 2. 核心创收品类 Top 5
+*   **业务动作**：关联产品表与品类翻译表，计算销售额排名前五的品类。
+*   **业务洞察**：`bed_bath_table`（床品桌布）和 `health_beauty`（美妆个护）是平台的营收支柱。这类高频/刚需商品适合作为平台引流款。
+*   *<img width="1653" height="993" alt="2017年Top5品类销售额" src="https://github.com/user-attachments/assets/694f3731-6f9c-414e-aecc-b29ea0b432c8" />
+*
+
+### 3. 用户复购率分析
+*   **业务动作**：计算当月新客在次月的留存情况。
+*   **业务洞察**：平台整体次月复购率极低（徘徊在 0.2% - 0.8% 之间）。说明平台属于典型的“拉新驱动型”，用户忠诚度较弱。建议在大促后针对首购用户发放定向复购券。
+*   <img width="1653" height="993" alt="2017年各月复购率" src="https://github.com/user-attachments/assets/9fcc2641-f989-4eab-aa3a-029b6de01476" />
+*
+
+### 4. RFM 用户分层模型
+*   **业务动作**：使用 `NTILE(5)` 窗口函数对用户的最近消费时间(R)、消费频次(F)、消费金额(M)进行 1-5 分打分，划分用户群体。
+*   **业务洞察**：**一般维持客户**占比极高（约 7.2 万人），而**重要价值客户**仅占约 12%。这说明高净值用户稀缺，运营重心应从“盲目拉新”转向“存量用户的精细化激活”。
+*   <img width="1653" height="993" alt="RFM" src="https://github.com/user-attachments/assets/d1cb85ea-5ade-4284-b879-6f68911ec48a" />
+*
+
+## 如何复现
+1. 去 Kaggle 下载 [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)。
+2. 在本地 MySQL 创建数据库 `olist_analysis` 并导入 9 张 CSV 表。
+3. 运行根目录下的 `Olist.sql` 文件即可复现上述数据结果。
